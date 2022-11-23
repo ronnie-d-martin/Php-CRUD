@@ -27,7 +27,7 @@ include "dbconfig.php";
             </thead>
             <tbody>
                 <?php
-                $sqlJoins = "SELECT firstname,lastname,album.title,album.views,songs.newsong FROM artists JOIN album ON artists.id_album = album.id_album JOIN songs ON songs.id_song = artists.id_song";
+                $sqlJoins = "SELECT firstname,lastname,b.title,b.views,s.newsong FROM artists a JOIN album b ON a.id_album = b.id_album JOIN songs s ON s.id_song = a.id_song";
                 $resultJoins = mysqli_query($conn, $sqlJoins);
 
                 if ($resultJoins) {
