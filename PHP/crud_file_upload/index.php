@@ -1,8 +1,18 @@
 <?php
 include 'connectDb.php';
 
-if(isset($_GET['addUser'])){
+if (isset($_GET['addUser'])) {
     header("location:addCars.php");
+}
+
+if (isset($_POST['delete'])) {
+
+    $id = $_POST['id'];
+
+    $sqlDelete = "DELETE FROM cars WHERE id = '$id'";
+    $resultDelete = mysqli_query($conn, $sqlDelete);
+
+    header("Refresh:0");
 }
 
 ?>
@@ -22,6 +32,7 @@ if(isset($_GET['addUser'])){
     <div class="container">
         <h1>CRUD</h1>
         <a href="index.php?addUser"><button class="btn btn-primary">New Cars</button></a>
+
         <table class="table">
             <thead>
                 <tr>
@@ -34,36 +45,42 @@ if(isset($_GET['addUser'])){
                 </tr>
             </thead>
             <tbody>
-<?php 
-    $sqlRead = "SELECT * FROM cars";
-    $resultRead = mysqli_query($conn,$sqlRead);
+                <?php
+                $sqlRead = "SELECT * FROM cars";
+                $resultRead = mysqli_query($conn, $sqlRead);
 
-    if(mysqli_num_rows($resultRead) > 0){
-        while($row = mysqli_fetch_assoc($resultRead)){
-            echo ' <tr>
-                    <td>'.$row['id'].'</td>
-                    <td>'.$row['model'].'</td>
-                    <td>'.$row['color'].'</td>
-                    <td>'.$row['value'].'</td>
-                    <td><img src="upload/'.$row['image'].'" alt="Muscle cars" width="150" height="100"/></td>
+                if (mysqli_num_rows($resultRead) > 0) {
+                    while ($row = mysqli_fetch_assoc($resultRead)) {
+                        echo ' <tr>
+                    <td>' . $row['id'] . '</td>
+                    <td>' . $row['model'] . '</td>
+                    <td>' . $row['color'] . '</td>
+                    <td>' . $row['value'] . '</td>
+                    <td><img src="upload/' . $row['image'] . '"  width="150" height="100"/></td>
                     <td>
-                        <input type="hidden" value='.$row['id'].'>
+                    <form method="POST">
+                        <input type="hidden" name="id" value=' . $row['id'] . '>
                         <button class="btn btn-info">Edit</button>
+                        </form>
                     </td>
+                    
                     <td>
-                        <input type="hidden" value='.$row['id'].'>
-                        <button class="btn btn-danger" >Delete</button>
+                    <form method="POST">
+                        <input type="hidden" name="id" value=' . $row['id'] . '>
+                        <button class="btn btn-danger" name="delete" >Delete</button>
+                        </form>
                     </td>
                   </tr>';
-        }
-    } else{
-        echo "<tr>
+                    }
+                } else {
+                    echo "<tr>
            <td colspan='5'>Empty Table</td>
         </tr>";
-    }
-?>
+                }
+                ?>
             </tbody>
         </table>
+
     </div>
 </body>
 
