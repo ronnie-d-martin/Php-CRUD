@@ -27,7 +27,7 @@ include "dbconfig.php";
             </thead>
             <tbody>
                 <?php
-                $sqlJoins = "SELECT artists.firstname,artists.lastname,album.title,album.views,songs.newsong FROM artists RIGHT JOIN album ON artists.id_album = album.id_album INNER JOIN songs ON songs.id_song = artists.id_song";
+                $sqlJoins = "SELECT firstname,lastname,album.title,album.views,songs.newsong FROM artists JOIN album ON artists.id_album = album.id_album JOIN songs ON songs.id_song = artists.id_song";
                 $resultJoins = mysqli_query($conn, $sqlJoins);
 
                 if ($resultJoins) {
@@ -42,7 +42,6 @@ include "dbconfig.php";
                         ';
                     }
                 }
-
 
                 ?>
             </tbody>
